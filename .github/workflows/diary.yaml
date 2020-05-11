@@ -1,0 +1,58 @@
+name: diary
+on:
+  schedule:
+    # JST 00:00
+    - cron: "0 15 * * *"
+jobs:
+  generate-diary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checkout submodule halogenica/beautifulhugo
+        uses: actions/checkout@v2.0.0
+        with:
+          repository: gcushen/hugo-academic
+          path: themes/academic
+      - name: Checkout submodule d-kuro/d-kuro.github.io
+        uses: actions/checkout@v2.0.0
+        with:
+          repository: d-kuro/d-kuro.github.io
+          path: public
+      - name: Setup Hugo
+        run: |
+          mkdir tmp
+          curl -sLJO "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz"
+          tar -xvzf "hugo_${HUGO_VERSION}_Linux-64bit.tar.gz" -C ./tmp/
+          sudo mv ./tmp/hugo /usr/local/bin/
+        env:
+          HUGO_VERSION: "0.69.2"
+      - name: Hugo version
+        run: hugo version
+      - name: Submodule update
+        run: git submodule foreach git pull origin master
+      - name: Hugo new
+        run: hugo new diaries/$(TZ=Asia/Tokyo date "+%Y%m")/$(TZ=Asia/Tokyo date "+%Y%m%d").md
+      - name: Add stage
+        run: git add .
+      - name: Setup template
+        run: echo -e "## Note\n" >> content/diaries/$(TZ=Asia/Tokyo date "+%Y%m")/$(TZ=Asia/Tokyo date "+%Y%m%d").md
+      - name: Run Hugo
+        run: hugo
+      - name: Setup Git
+        run: |
+          git remote set-url origin https://d-kuro:${GITHUB_TOKEN}@github.com/d-kuro/blog.git
+          git config --global user.name ${GIT_USER}
+          git config --global user.email ${GIT_EMAIL}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_USER: "d-kuro"
+          GIT_EMAIL: "kurosawa7620@gmail.com"
+      - name: Commit and push
+        shell: bash --noprofile --norc {0}
+        run: |
+          git diff --exit-code --quiet
+          if [ 0 -ne $? ]; then
+            git add .
+            git commit -m "Add post."
+            git push origin HEAD:${GITHUB_REF}
+          fi
