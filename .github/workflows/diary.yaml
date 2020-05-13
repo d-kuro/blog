@@ -32,8 +32,6 @@ jobs:
         run: git submodule foreach git pull origin master
       - name: Hugo new
         run: hugo new diaries/$(TZ=Asia/Tokyo date "+%Y%m")/$(TZ=Asia/Tokyo date "+%Y%m%d").md
-      - name: Add stage
-        run: git add .
       - name: Setup template
         run: echo -e "## Note\n" >> content/diaries/$(TZ=Asia/Tokyo date "+%Y%m")/$(TZ=Asia/Tokyo date "+%Y%m%d").md
       - name: Run Hugo
