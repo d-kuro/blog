@@ -8,24 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Checkout submodule halogenica/beautifulhugo
-        uses: actions/checkout@v2.0.0
         with:
-          repository: gcushen/hugo-academic
-          path: themes/academic
-      - name: Checkout submodule d-kuro/d-kuro.github.io
-        uses: actions/checkout@v2.0.0
-        with:
-          repository: d-kuro/d-kuro.github.io
-          path: public
+          submodules: true  # Fetch Hugo themes
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
       - name: Setup Hugo
-        run: |
-          mkdir tmp
-          curl -sLJO "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz"
-          tar -xvzf "hugo_${HUGO_VERSION}_Linux-64bit.tar.gz" -C ./tmp/
-          sudo mv ./tmp/hugo /usr/local/bin/
-        env:
-          HUGO_VERSION: "0.69.2"
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.70.0'
       - name: Hugo version
         run: hugo version
       - name: Submodule update
