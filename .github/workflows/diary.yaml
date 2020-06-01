@@ -16,8 +16,6 @@ jobs:
           hugo-version: '0.70.0'
       - name: Hugo version
         run: hugo version
-      - name: Submodule update
-        run: git submodule update --remote --merge
       - name: Hugo new
         run: hugo new diaries/$(TZ=Asia/Tokyo date "+%Y%m")/$(TZ=Asia/Tokyo date "+%Y%m%d").md
       - name: Setup template

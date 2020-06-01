@@ -28,6 +28,7 @@ git push origin master
 cd ..
 
 # Commit source repository changes
+git submodule update --remote --merge
 git add .
 git commit -m "$msg"
 git push
