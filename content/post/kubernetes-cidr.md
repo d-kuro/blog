@@ -108,5 +108,3 @@ When running a large Kubernetes cluster, you need to take care of the CIDR range
 
 * [Optimizing IP address allocation  |  Kubernetes Engine Documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr)
 * [Many Kubernetes Clusters | SRCco.de](https://srcco.de/posts/many-kubernetes-clusters.html)
-
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=dkuro-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=1617293725&linkId=7d9809d003dc1511008d6f38334afe09"></iframe>
