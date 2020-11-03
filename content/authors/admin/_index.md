@@ -54,3 +54,8 @@ user_groups:
 - Visitors
 ---
 
+Hi, I'm a software engineer interested in Kubernetes and other cloud-native technologies.
+I am currently working as an SRE at Quipper, Ltd.
+
+I want to make use of the experience I gained on the job to contribute to other companies.
+If your company has any problems or questions about Kubernetes, please contact us!
